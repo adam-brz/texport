@@ -88,7 +88,7 @@ class OBJECT_OT_Export(bpy.types.Operator):
         return {"FINISHED"}
 
     def _export(self, image, output_dir, output_file):
-        output_dir = bpy.path.abspath(output_dir or "//")
+        output_dir = bpy.path.abspath(output_dir or "//") or "."
         os.makedirs(output_dir, exist_ok=True)
         output_filename = os.path.join(
             output_dir,
