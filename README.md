@@ -4,7 +4,7 @@ Easily export selected textures from `.blend` file to directory of your choice.
 
 ## Installation
 
-To install the add-on, download the texport-x-y-z.zip file attached to the [latest release](https://github.com/Andrew2a1/texport/releases) and install it as a regular blender add-on (User Preferences -> Addons -> Install from file).
+To install the add-on, download the texport-x.y.z.zip file attached to the [latest release](https://github.com/Andrew2a1/texport/releases) and install it as a regular blender add-on (User Preferences -> Addons -> Install from file).
 
 ## Usage
 
