@@ -73,6 +73,7 @@ class OBJECT_OT_Export(bpy.types.Operator):
 
     def execute(self, context):
         options = context.scene.texport_plugin_options
+        output_dir = self._normalize_output_dir(options.output_directory)
         exported_images = 0
 
         for entry in context.scene.textures_list:
@@ -81,17 +82,19 @@ class OBJECT_OT_Export(bpy.types.Operator):
                 filename = (
                     f"{os.path.splitext(entry.texture_name)[0]}.{entry.output_format}"
                 )
-                self._export(image, options.output_directory, filename)
+                self._export(image, output_dir, filename)
                 exported_images += 1
 
-        self.report({"INFO"}, f"Exported {exported_images} images.")
+        self.report({"INFO"}, f"Exported {exported_images} images to '{output_dir}'.")
         return {"FINISHED"}
 
     def _export(self, image, output_dir, output_file):
-        output_dir = bpy.path.abspath(output_dir or "//") or "."
         os.makedirs(output_dir, exist_ok=True)
         output_filename = os.path.join(
             output_dir,
             output_file,
         )
         image.save(filepath=output_filename, quality=100)
+
+    def _normalize_output_dir(self, output_dir):
+        return bpy.path.abspath(output_dir or "//") or os.path.abspath(".")
