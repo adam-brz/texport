@@ -50,7 +50,9 @@ def register():
     bpy.types.Scene.texport_plugin_options = bpy.props.PointerProperty(
         type=PluginOptions
     )
-    bpy.types.Scene.textures_list_active_index = bpy.props.IntProperty(min=-1, max=-1)
+    bpy.types.Scene.textures_list_active_index = bpy.props.IntProperty(
+        default=-1, min=-1, max=-1
+    )
     bpy.app.timers.register(update_texture_list_callback)
 
 
