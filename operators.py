@@ -17,7 +17,11 @@ class OBJECT_OT_Refresh(bpy.types.Operator):
         new_texture_names = [image.name for image in bpy.data.images]
 
         for image in bpy.data.images:
-            if image.name not in current_texture_names:
+            if (
+                image.name not in current_texture_names
+                and image.resolution.x > 0
+                and image.resolution.y > 0
+            ):
                 new_item = context.scene.textures_list.add()
                 new_item.texture_name = image.name
 
