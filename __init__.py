@@ -53,11 +53,13 @@ def register():
     bpy.types.Scene.textures_list_active_index = bpy.props.IntProperty(
         default=-1, min=-1, max=-1
     )
-    bpy.app.timers.register(update_texture_list_callback)
+    if not bpy.app.timers.is_registered(update_texture_list_callback):
+        bpy.app.timers.register(update_texture_list_callback)
 
 
 def unregister():
-    bpy.app.timers.unregister(update_texture_list_callback)
+    if bpy.app.timers.is_registered(update_texture_list_callback):
+        bpy.app.timers.unregister(update_texture_list_callback)
     class_unregister()
     del bpy.types.Scene.textures_list
     del bpy.types.Scene.textures_list_active_index
