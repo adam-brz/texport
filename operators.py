@@ -76,14 +76,15 @@ class OBJECT_OT_Export(bpy.types.Operator):
         output_dir = self._normalize_output_dir(options.output_directory)
         exported_images = 0
 
-        for entry in context.scene.textures_list:
-            if entry.export:
-                image = bpy.data.images[entry.texture_name]
-                filename = (
-                    f"{os.path.splitext(entry.texture_name)[0]}.{entry.output_format}"
-                )
-                self._export(image, output_dir, filename)
-                exported_images += 1
+        try:
+            for entry in context.scene.textures_list:
+                if entry.export and entry.texture_name in bpy.data.images:
+                    image = bpy.data.images[entry.texture_name]
+                    filename = f"{os.path.splitext(entry.texture_name)[0]}.{entry.output_format}"
+                    self._export(image, output_dir, filename)
+                    exported_images += 1
+        except Exception as e:
+            self.report({"ERROR"}, f"{e}")
 
         self.report({"INFO"}, f"Exported {exported_images} images to '{output_dir}'.")
         return {"FINISHED"}
