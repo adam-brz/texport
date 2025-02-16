@@ -11,23 +11,12 @@ class OBJECT_OT_Refresh(bpy.types.Operator):
     bl_options = {"REGISTER", "UNDO"}
 
     def execute(self, context):
-        current_texture_names = [
-            item.texture_name for item in context.scene.textures_list
-        ]
-        new_texture_names = [image.name for image in bpy.data.images]
+        context.scene.textures_list.clear()
 
         for image in bpy.data.images:
-            if (
-                image.name not in current_texture_names
-                and image.resolution.x > 0
-                and image.resolution.y > 0
-            ):
+            if image.resolution.x > 0 and image.resolution.y > 0:
                 new_item = context.scene.textures_list.add()
                 new_item.texture_name = image.name
-
-        for image_name in current_texture_names:
-            if image_name not in new_texture_names:
-                context.scene.textures_list.remove(image_name)
 
         return {"FINISHED"}
 
